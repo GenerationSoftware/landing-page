@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generation Software Inc.</title>
+  <style>
+    html, #content {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: monospace;
+      flex-direction: column;
+      font-size: 48px;
+      padding: 1em;
+    }
+
+    h1 {
+        font-size: 2em;
+        margin: 0;
+        padding: 0;
+        text-align: left;
+        color: #000;
+        text-transform: uppercase;
+        font-family: monospace;
+    }
+
+    #content-box {
+      display: inline-block;
+      text-align: left;
+      white-space: pre-wrap;
+      padding: 1em 0 0 0;
+      color: #000;
+    }
+
+    #contact {
+        margin-top: 5em;
+    }
+
+    a {
+        /* text-transform: uppercase; */
+        color: black;
+    }
+
+    /* visited link */
+    a:visited {
+        color: hotpink;
+    }
+
+    /* mouse over link */
+    a:hover {
+        color: hotpink;
+    }
+
+    /* selected link */
+    a:active {
+        color: rgba(255, 255, 0, 0.14);
+    }
+  </style>
+</head>
+<body>
+
+    <div id="content">
+        <div id="fixed-width-wrapper">
+            <h1>Generation Software</h1>
+            <div id="content-box"></div>
+            <p id="contact">
+                Let's build the future together
+                <br><br>
+                <a target="_blank" href="mailto:contact@g9software.xyz">Contact us</a>
+            </p>
+        </div>
+        
+    </div>
+
+  <script>
+    const SENTENCE_DELAY = 500
+
+    // Function to simulate typing effect
+    function typeWriter(sentence, index, callback) {
+      if (index < sentence.length) {
+        document.getElementById("content-box").textContent = sentence.slice(0, index + 1);
+        index++;
+        setTimeout(function() { typeWriter(sentence, index, callback); }, 20+Math.random()*40); // Delay between characters (50 milliseconds)
+      } else {
+        setTimeout(callback, SENTENCE_DELAY); // Delay after typing the entire sentence (1 second)
+      }
+    }
+
+    // Function to display sentences in a loop
+    function displaySentences(sentences, index) {
+      var sentence = sentences[index];
+      typeWriter(sentence, 0, function() {
+        index++;
+        if (index >= sentences.length) {
+          index = 0; // Reset to the first sentence
+        }
+        setTimeout(function() { displaySentences(sentences, index); }, SENTENCE_DELAY); // Delay before displaying the next sentence (1 second)
+      });
+    }
+
+    // The array of sentences to be displayed
+    var sentences = [
+        "Unlock new human behaviour",
+        "that lasts many lifetimes",
+        "with technology you can trust",
+    ];
+
+    // Find the length of the longest sentence
+    var lengths = sentences.map(function(sentence) { return sentence.length; });
+    var longestSentenceLength = lengths.sort()[lengths.length - 1]
+
+    // Set the width of the content box to fit the longest sentence
+    var contentBox = document.getElementById("content-box");
+    contentBox.style.width = longestSentenceLength + "ch";
+
+    // Start displaying the sentences
+    displaySentences(sentences, 0);
+  </script>
+
+</body>
+</html>
